@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -21,10 +21,9 @@ public class PerformanceTest {
     private int chunkCount;
     private long startTime;
 
-    private HashMap<String, ArrayList<Double>> timings = new HashMap<>();
-
     public synchronized void runPerformanceTest() {
         if (nbtLibrary == null) {
+            LinkedHashMap<String, ArrayList<Double>> timings = new LinkedHashMap<>();
             System.out.println("All libraries will be tested");
             for (NBTLibrary library : new NBTLibrary[]{
                     new QuerzLibrary(),
@@ -36,7 +35,7 @@ public class PerformanceTest {
                     new VanillaLibrary()
             }) {
                 String libName = library.getClass().getSimpleName();
-                System.out.println("Starting test for " + libName + " ...");
+                System.out.println("Starting tests for " + libName + " ...");
                 timings.put(libName, new ArrayList<>());
                 for (int i = 0; i < 10; i++) {
                     double chunksPerSecond = new PerformanceTest(library, regionFilesFolder).runSinglePerformanceTest();
@@ -46,8 +45,8 @@ public class PerformanceTest {
             System.out.println();
             System.out.println("Average timings:");
             System.out.println();
-            System.out.println("Library | Min | Max | Average | Standard Deviation");
-            System.out.println("--------|-----|-----|---------|-------------------");
+            System.out.println("Library                     |   Min   |   Max   | Average | Standard Deviation");
+            System.out.println("----------------------------|---------|---------|---------|-------------------");
             for (String libName : timings.keySet()) {
                 ArrayList<Double> libTimings = timings.get(libName);
                 double min = libTimings.stream().mapToDouble(Double::doubleValue).min().orElse(0);
