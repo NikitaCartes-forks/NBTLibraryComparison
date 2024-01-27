@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - with-regions
+  pull_request:
+    branches:
+      - with-regions
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
+
+      - name: Build with Gradle
+        run: ./gradlew clean shadowJar
+
+      - name: Copy builded jar to root
+        run: cp build/libs/NBTLibraryComparison-1.0-all.jar .
+
+      - name: Run tests
+        run: java -jar -Xms2G -Xmx2G NBTLibraryComparison-1.0-all.jar
