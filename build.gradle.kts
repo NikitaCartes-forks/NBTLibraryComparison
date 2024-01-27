@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id ("com.github.johnrengelman.shadow") version "7.1.2"
+    id ("fabric-loom") version "1.5-SNAPSHOT"
 }
 
 group = "de.bluecolored.nbtlibtest"
@@ -17,6 +18,10 @@ dependencies {
     implementation (group = "com.github.BlueMap-Minecraft", name = "BlueNBT", version = "v1.3.0")
     implementation (group = "com.github.Querz", name = "NBT", version = "6.1")
     implementation (group = "org.popcraft", name = "chunky-nbt", version = "1.3.76")
+
+    // Minecraft dependencies
+    minecraft ("com.mojang:minecraft:24w04a")
+    mappings (loom.officialMojangMappings())
 
     compileOnly ("org.projectlombok:lombok:1.18.28")
 

@@ -71,6 +71,7 @@ public class PerformanceTest {
             case "chunky" -> new ChunkyLibrary();
             case "bluenbtFull" -> new BlueNBTLoadFullChunkLibrary();
             case "bluenbtDirect" -> new BlueNBTDirectLibrary();
+            case "vanilla" -> new VanillaLibrary();
             default -> new BlueNBTLibrary();
         };
 
