@@ -18,7 +18,7 @@ public class VanillaLibrary implements NBTLibrary {
     @Override
     public Chunk loadChunk(InputStream in) throws IOException {
         CompoundTag data = NbtIo.read(new DataInputStream(in), NbtAccounter.unlimitedHeap());
-        return new ChunkyLibrary.ChunkImpl(
+        return new ChunkImpl(
                 data.getInt("DataVersion"),
                 data.getInt("xPos"),
                 data.getInt("yPos"),
