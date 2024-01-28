@@ -28,3 +28,13 @@ The command to run the tests: `java -jar -Xms1G -Xmx1G .\NBTLibraryComparison-1.
 | kyori         | 50787246000   | 3245.4   | -                                                                                     |
 | querz         | 42590299800   | 3870.0   | -                                                                                     |
 | chunky        | 42282843500   | 3898.1   | -                                                                                     |
+
+## Tested libraries
+- [OpenNBT](https://github.com/GeyserMC/OpenNBT)
+- [JNBT](https://github.com/Morlok8k/JNBT)
+- [BitBuf's nbt](https://github.com/BitBuf/nbt)
+- [IzzelAliz's nbt](https://github.com/IzzelAliz/nbt)
+- [ViaNBT](https://github.com/ViaVersion/ViaNBT)
+- [AllayMc's NBT](https://github.com/AllayMC/NBT)
+- [Piegamesde's NBT](https://github.com/piegamesde/nbt)
+- [simple-nbt](https://github.com/piegamesde/nbt)

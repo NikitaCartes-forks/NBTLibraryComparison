@@ -2,29 +2,28 @@ package de.bluecolored.nbtlibtest.libs;
 
 import de.bluecolored.nbtlibtest.Chunk;
 import de.bluecolored.nbtlibtest.NBTLibrary;
+import io.izzel.nbt.CompoundTag;
+import io.izzel.nbt.util.NbtReader;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtAccounter;
-import net.minecraft.nbt.NbtIo;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class VanillaLibrary implements NBTLibrary {
+public class IzzelNbtLibrary implements NBTLibrary {
 
     @Override
     public Chunk loadChunk(InputStream in) throws IOException {
-        CompoundTag data = NbtIo.read(new DataInputStream(in), NbtAccounter.unlimitedHeap());
+
+        CompoundTag data = new NbtReader(in).toCompoundTag();
         return new ChunkImpl(
-                data.getInt("DataVersion"),
-                data.getInt("xPos"),
-                data.getInt("yPos"),
-                data.getInt("zPos"),
-                data.getLong("InhabitedTime"),
-                data.getString("Status")
+                data.getIntOrDefault("DataVersion"),
+                data.getIntOrDefault("xPos"),
+                data.getIntOrDefault("yPos"),
+                data.getIntOrDefault("zPos"),
+                data.getLongOrDefault("InhabitedTime"),
+                data.getStringOrDefault("Status")
         );
     }
     @Data

@@ -5,27 +5,28 @@ import de.bluecolored.nbtlibtest.NBTLibrary;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtAccounter;
-import net.minecraft.nbt.NbtIo;
+import org.cloudburstmc.nbt.NBTInputStream;
+import org.cloudburstmc.nbt.NbtMap;
+import org.cloudburstmc.nbt.NbtUtils;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class VanillaLibrary implements NBTLibrary {
+public class AllayMcNbtLibrary implements NBTLibrary {
 
     @Override
     public Chunk loadChunk(InputStream in) throws IOException {
-        CompoundTag data = NbtIo.read(new DataInputStream(in), NbtAccounter.unlimitedHeap());
-        return new ChunkImpl(
-                data.getInt("DataVersion"),
-                data.getInt("xPos"),
-                data.getInt("yPos"),
-                data.getInt("zPos"),
-                data.getLong("InhabitedTime"),
-                data.getString("Status")
-        );
+        try (NBTInputStream stream = NbtUtils.createNetworkReader(in)) {
+            NbtMap data = (NbtMap) stream.readTag();
+            return new ChunkImpl(
+                    data.getInt("DataVersion"),
+                    data.getInt("xPos"),
+                    data.getInt("yPos"),
+                    data.getInt("zPos"),
+                    data.getLong("InhabitedTime"),
+                    data.getString("Status")
+            );
+        }
     }
     @Data
     @NoArgsConstructor

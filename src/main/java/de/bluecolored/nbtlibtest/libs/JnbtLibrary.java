@@ -5,28 +5,27 @@ import de.bluecolored.nbtlibtest.NBTLibrary;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtAccounter;
-import net.minecraft.nbt.NbtIo;
+import org.jnbt.*;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class VanillaLibrary implements NBTLibrary {
+public class JnbtLibrary implements NBTLibrary {
 
     @Override
     public Chunk loadChunk(InputStream in) throws IOException {
-        CompoundTag data = NbtIo.read(new DataInputStream(in), NbtAccounter.unlimitedHeap());
+        CompoundTag data = (CompoundTag) new NBTInputStream(new DataInputStream(in)).readTag();
         return new ChunkImpl(
-                data.getInt("DataVersion"),
-                data.getInt("xPos"),
-                data.getInt("yPos"),
-                data.getInt("zPos"),
-                data.getLong("InhabitedTime"),
-                data.getString("Status")
+                ((IntTag) data.getValue().get("DataVersion")).getValue(),
+                ((IntTag) data.getValue().get("xPos")).getValue(),
+                ((IntTag) data.getValue().get("yPos")).getValue(),
+                ((IntTag) data.getValue().get("zPos")).getValue(),
+                ((LongTag) data.getValue().get("InhabitedTime")).getValue(),
+                ((StringTag) data.getValue().get("Status")).getValue()
         );
     }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

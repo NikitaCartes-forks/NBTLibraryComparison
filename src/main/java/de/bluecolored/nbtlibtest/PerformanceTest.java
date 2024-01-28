@@ -32,7 +32,14 @@ public class PerformanceTest {
                     new BlueNBTLibrary(),
                     new BlueNBTLoadFullChunkLibrary(),
                     new BlueNBTDirectLibrary(),
-                    new VanillaLibrary()
+                    new VanillaLibrary(),
+                    new OpenNbtLibrary(),
+                    new JnbtLibrary(),
+                    new BitBufNbtLibrary(),
+                    new IzzelNbtLibrary(),
+                    // new AllayMcNbtLibrary(),
+                    new PiegamesdeLibrary(),
+                    new SimpleNbtLibrary(),
             }) {
                 String libName = library.getClass().getSimpleName();
                 System.out.println("Starting tests for " + libName + " ...");
@@ -53,7 +60,7 @@ public class PerformanceTest {
                 double max = libTimings.stream().mapToDouble(Double::doubleValue).max().orElse(0);
                 double average = libTimings.stream().mapToDouble(Double::doubleValue).average().orElse(0);
                 double stdDev = Math.sqrt(libTimings.stream().mapToDouble(t -> Math.pow(t - average, 2)).sum() / libTimings.size());
-                System.out.printf("%s | %.2f | %.2f | %.2f | %.2f%n", libName, min, max, average, stdDev);
+                System.out.printf("%-28s | %.2f | %.2f | %.2f | %.2f%n", libName, min, max, average, stdDev);
             }
         } else {
             System.out.println("Starting test for " + nbtLibrary.getClass().getSimpleName() + " ...");
@@ -117,6 +124,13 @@ public class PerformanceTest {
             case "bluenbtFull" -> new BlueNBTLoadFullChunkLibrary();
             case "bluenbtDirect" -> new BlueNBTDirectLibrary();
             case "vanilla" -> new VanillaLibrary();
+            case "opennbt" -> new OpenNbtLibrary();
+            case "jntb" -> new JnbtLibrary();
+            case "bitbuf" -> new BitBufNbtLibrary();
+            case "izzel" -> new IzzelNbtLibrary();
+            case "allaymc" -> new AllayMcNbtLibrary();
+            case "piegamesde" -> new PiegamesdeLibrary();
+            case "simple" -> new SimpleNbtLibrary();
             default -> null;
         };
 
